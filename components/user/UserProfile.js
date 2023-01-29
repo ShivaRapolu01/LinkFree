@@ -3,6 +3,9 @@ import ReactMarkdown from "react-markdown";
 import { MdQrCode2 } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 
+
+import {RxSpeakerLoud} from "react-icons/rx";
+import {Howl} from 'howler';;
 import FallbackImage from "../FallbackImage";
 import UserSocial from "./UserSocials";
 import Tag from "../Tag";
@@ -11,6 +14,15 @@ import { abbreviateNumber } from "../../services/utils/abbreviateNumbers";
 export default function UserProfile({ BASE_URL, data }) {
   const [qrShow, setQrShow] = useState(false);
   const fallbackImageSize = 120;
+
+  const soundPlay=(src)=>{
+    const sound=new Howl({
+      src,
+      html5:true 
+    })
+    sound.play(); 
+  }
+
   return (
     <>
       <div className="flex justify-center items-center flex-col md:flex-row gap-x-6">
@@ -52,6 +64,11 @@ export default function UserProfile({ BASE_URL, data }) {
                 />
               ))}
           </div>
+          {data.voice && (
+            <div className="cursor-pointer pt-1.5 items-center text-center">
+              <RxSpeakerLoud onClick={()=>soundPlay(data.voice)}/>
+            </div>
+          )}
         </div>
       </div>
       <div className="flex justify-center my-4 text-center">
